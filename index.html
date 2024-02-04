@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: pink;
+			background-image: url("./pngtree-hand-drawn-daisies-flower-seamless-pattern-illustration-background-image_776955.jpeg");
+			background-size: cover;
+			color: #f00c93;
+		}
+		button {
+			padding: 10px 20px;
+			margin: 10px;
+			cursor: pointer;
+			border: 1px solid pink;
+			background: #ff8da1;
+			color: #f00c93;
+			font-weight: bold;
+		}
+		.container {
+			display: flex;
+			width: 100%;
+			height: 100vh;
+			max-width: 1024px;
+			margin: auto;
+			align-items: center;
+			justify-content: center;
+		}
+		.content {
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+			align-items: center;
+		}
+		.image {
+			width: 250px;
+			height: 250px;
+			object-fit: cover;
+		}
+		.image > img {
+			width: 100%;
+			height: 100%;
+		}
+		#warningImage {
+			display: none;
+			position: absolute;
+			z-index: 100;
+		}
+		#warningText {
+			display: none;
+		}
+		#sheSaidYesText {
+			display: none;
+		}
+		#successImage {
+			display: none;
+		}
+		#dontWork {
+			display: none;
+		}
+
+		#noButton {
+			transition: transform 0.1s ease-in-out;
+		}
+		.mobile-message {
+			display: none;
+		}
+
+		@media screen and (max-width: 768px) {
+			body {
+				background: #000;
+				background-image: none;
+				color: #fff;
+			}
+			.container {
+				display: none;
+			}
+
+			.mobile-message {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				text-align: center;
+				padding: 20px;
+			}
+		}
+	</style>
+	<body>
+		<div class="container">
+			<div class="content">
+				<img class="image" id="mainImage" src="./main.jpeg" />
+				<img class="image" id="warningImage" src="warning.jpeg" />
+				<img class="image" id="successImage" src="success.jpeg" />
+				<img class="image" id="dontWork" src="dont-work.jpeg" />
+
+				<h1 id="yesText">Будеш моєю валентинкою?</h1>
+				<h1 id="warningText">Це не та кнопочка</h1>
+				<h1 id="sheSaidYesText">УІІІІІІ. До зустрічі <3</h1>
+
+				<div class="">
+					<button id="yesButton">Так</button>
+					<button id="noButton">Ні</button>
+				</div>
+			</div>
+		</div>
+		<div class="mobile-message">
+			<h1>Працює тільки з компіка</h1>
+		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const noButton = document.getElementById("noButton");
+
+				noButton.addEventListener("mouseover", function () {
+					const newX = (Math.random() * window.innerWidth) / 5 + 5;
+					const newY = (Math.random() * window.innerHeight) / 5 + 5;
+					noButton.style.transform = `translate(${newX}px, ${newY}px)`;
+					warningImage.style.display = "block";
+					warningText.style.display = "block";
+					yesText.style.display = "none";
+				});
+
+				yesButton.addEventListener("mouseover", function () {
+					warningImage.style.display = "none";
+					warningText.style.display = "none";
+					dontWork.style.display = "none";
+					yesText.style.display = "block";
+				});
+
+				noButton.addEventListener("click", () => {
+					dontWork.style.display = "block";
+					warningImage.style.display = "none";
+					mainImage.style.display = "none";
+				});
+
+				yesButton.addEventListener("click", () => {
+					sheSaidYesText.style.display = "block";
+					successImage.style.display = "block";
+
+					mainImage.style.display = "none";
+					yesText.style.display = "none";
+					noButton.style.display = `none`;
+					yesButton.style.display = `none`;
+
+					// fetch("https://hooks.zapier.com/hooks/catch/17774968/3qi6ae5/", {
+					// 	method: "POST",
+					// 	body: JSON.stringify({ answer: "yes" }),
+					// });
+				});
+			});
+		</script>
+	</body>
+</html>
