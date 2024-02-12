@@ -73,9 +73,7 @@
 		#noButton {
 			transition: transform 0.1s ease-in-out;
 		}
-		.mobile-message {
-			display: none;
-		}
+
 		.text {
 			text-align: center;
 			width: 500px;
@@ -85,24 +83,12 @@
 			color: #000;
 		}
 
-		@media screen and (max-width: 768px) {
-			body {
-				background: #000;
-				background-image: none;
-				color: #fff;
-			}
-			.container {
-				display: none;
-			}
+		.enlarged {
+			transform: scale(1.2); /* Enlarge the button by 20% */
+			transition: transform 0.2s ease-in-out; /* Smooth transition */
+		}
 
-			.mobile-message {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				text-align: center;
-				padding: 20px;
-			}
+		@media screen and (max-width: 768px) {
 		}
 	</style>
 	<body>
@@ -135,13 +121,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="mobile-message">
-			<h1>Працює тільки з компіка</h1>
-		</div>
 
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				const noButton = document.getElementById("noButton");
+				const yesButton = document.getElementById("yesButton");
+				const isMobile = window.innerWidth <= 768; // Simple mobile device check
+				let yesButtonScale = 1; // Initial scale for the Yes button
+
+				if (!isMobile) {
+					noButton.addEventListener("mouseover", function () {
+						const newX = (Math.random() * window.innerWidth) / 5 + 5;
+						const newY = (Math.random() * window.innerHeight) / 5 + 5;
+						noButton.style.transform = `translate(${newX}px, ${newY}px)`;
+						// Existing logic for displaying elements
+					});
+				}
 
 				noButton.addEventListener("mouseover", function () {
 					const newX = (Math.random() * window.innerWidth) / 5 + 5;
@@ -162,11 +157,19 @@
 				});
 
 				noButton.addEventListener("click", () => {
-					warningText.style.display = "none";
-					dontWork.style.display = "block";
-					errorText.style.display = "block";
-					warningImage.style.display = "none";
 					mainImage.style.display = "none";
+
+					yesButtonScale += 0.1; // Increase the scale by 10% with each click
+					yesButton.style.transform = `scale(${yesButtonScale})`;
+					yesButton.style.transition = "transform 0.2s ease-in-out";
+					if (!isMobile) {
+						warningText.style.display = "none";
+						warningImage.style.display = "none";
+						dontWork.style.display = "block";
+					} else {
+						dontWork.style.display = "block";
+						errorText.style.display = "none";
+					}
 				});
 
 				yesButton.addEventListener("click", () => {
